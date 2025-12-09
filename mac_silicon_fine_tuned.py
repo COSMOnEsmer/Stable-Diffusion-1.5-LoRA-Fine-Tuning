@@ -1,11 +1,21 @@
 import torch
 from diffusers import StableDiffusionPipeline
 
-device = "mps"
+if torch.cuda.is_available():
+    device = "cuda"
+    weight_dtype = torch.float16  # Nvidia GPUs - float16
+elif torch.backends.mps.is_available():
+    device = "mps"
+    weight_dtype = torch.float16  # Apple Silicon - float16
+else:
+    device = "cpu"
+    weight_dtype = torch.float32  # CPU - float32 
+
+print(f"Using device: {device}")
 
 pipe = StableDiffusionPipeline.from_pretrained(
     "runwayml/stable-diffusion-v1-5",
-    torch_dtype=torch.float16
+    torch_dtype=weight_dtype  !
 )
 
 pipe.to(device)
