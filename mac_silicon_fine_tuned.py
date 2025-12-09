@@ -15,7 +15,7 @@ print(f"Using device: {device}")
 
 pipe = StableDiffusionPipeline.from_pretrained(
     "runwayml/stable-diffusion-v1-5",
-    torch_dtype=weight_dtype  !
+    torch_dtype=weight_dtype
 )
 
 pipe.to(device)
